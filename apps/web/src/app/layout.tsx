@@ -9,8 +9,8 @@ const space_grotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "clash-app",
-  description: "clash-app",
+  title: "Clash",
+  description: "",
 };
 
 export default function RootLayout({
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${space_grotesk.className} antialiased w-full h-full`}>
-        <main className="grid grid-rows-[auto_1fr] h-svh">{children}</main>
+        <main className="h-full w-full relative">{children}</main>
       </body>
     </html>
   );
