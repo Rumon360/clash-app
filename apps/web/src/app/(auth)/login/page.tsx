@@ -18,6 +18,7 @@ function Login() {
                 type="email"
                 id="email"
                 name="email"
+                autoComplete="email"
                 placeholder="Enter your email"
               />
             </div>
@@ -27,6 +28,7 @@ function Login() {
                 type="password"
                 id="password"
                 name="password"
+                autoComplete="off"
                 placeholder="Enter your password"
               />
               <div className="text-right pt-1">

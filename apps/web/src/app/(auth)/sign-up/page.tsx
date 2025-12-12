@@ -18,6 +18,7 @@ function SignUp() {
                 type="text"
                 id="name"
                 name="name"
+                autoComplete="off"
                 placeholder="Enter your name"
               />
             </div>
@@ -27,6 +28,7 @@ function SignUp() {
                 type="email"
                 id="email"
                 name="email"
+                autoComplete="email"
                 placeholder="Enter your email"
               />
             </div>
@@ -40,6 +42,7 @@ function SignUp() {
                   type="password"
                   id={field}
                   name={field}
+                  autoComplete="off"
                   placeholder={
                     field === "cpassword"
                       ? "Confirm your password"
