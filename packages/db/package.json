@@ -20,18 +20,20 @@
     "db:down": "docker-compose down"
   },
   "devDependencies": {
-    "prisma": "^7.0.1",
+    "@clash-app/config": "*",
     "@types/pg": "^8.11.11",
-    "@clash-app/config": "*"
+    "prisma": "^7.0.1"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
-    "@prisma/client": "^7.0.1",
     "@prisma/adapter-pg": "^7.0.1",
-    "pg": "^8.14.1",
+    "@prisma/client": "^7.0.1",
     "dotenv": "^17.2.2",
-    "zod": "^4.1.11"
+    "ioredis": "^5.8.2",
+    "pg": "^8.14.1",
+    "zod": "^4.1.11",
+    "bullmq": "^5.66.0"
   }
 }

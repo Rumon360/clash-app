@@ -4,7 +4,7 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import ejs from "ejs";
-import { sendMail } from "@clash-app/mail";
+import { emailQueue, EmailQueueName } from "./jobs/email.job";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -37,8 +37,11 @@ app.get("/welcome-email", async (_req, res) => {
       name: "Rumon",
       href: process.env.FRONTEND_URL,
     });
-
-    await sendMail("yoniyir695@alexida.com", "Welcome to Clash App", html);
+    await emailQueue.add(EmailQueueName, {
+      to: "yoniyir695@alexida.com",
+      subject: "Welcome to Clash App",
+      html: html,
+    });
     return res.json({ message: "Email sent successfully" });
   } catch (error) {
     console.log(error);
