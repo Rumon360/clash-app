@@ -3,7 +3,7 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(98.7% 0.026 102.212);
+  --background: #f8f4aa;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -80,5 +80,13 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .stroke-shadow-box {
+    box-shadow: 10px 10px 0px -4px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 10px 10px 0px -4px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 10px 10px 0px -4px rgba(0, 0, 0, 0.75);
   }
 }

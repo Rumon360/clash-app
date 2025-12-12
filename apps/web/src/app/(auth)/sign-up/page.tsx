@@ -5,9 +5,9 @@ import Link from "next/link";
 
 function SignUp() {
   return (
-    <div className="h-screen flex justify-center items-center w-full px-4">
-      <div className="w-full max-w-2xl mx-auto bg-white rounded-lg shadow stroke-1">
-        <div className="pb-4 border-b py-5 px-10 bg-yellow-100/20">
+    <div className="h-full w-full flex justify-center items-center px-4">
+      <div className="stroke-shadow-box w-full max-w-2xl mx-auto bg-white rounded-lg shadow stroke-1">
+        <div className="pb-4 border-b py-5 px-10 bg-[#77D87E] rounded-t-lg">
           <h1 className="text-2xl lg:text-3xl font-bold">Sign up</h1>
         </div>
         <div className="pb-10">
