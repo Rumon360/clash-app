@@ -24,14 +24,10 @@ export const sendMail = async (to: string, subject: string, body: string) => {
     name: "Mailtrap Test",
   };
 
-  try {
-    await transporter.sendMail({
-      from: sender,
-      to: to,
-      subject: subject,
-      html: body,
-    });
-  } catch (error) {
-    console.log(error);
-  }
+  await transporter.sendMail({
+    from: sender,
+    to: to,
+    subject: subject,
+    html: body,
+  });
 };
