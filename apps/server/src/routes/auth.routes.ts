@@ -1,8 +1,10 @@
-import { formatError, handlePrismaError } from "@/helpers";
+import { formatError, handlePrismaError, renderMailEjs } from "@/helpers";
 import { signUpSchema } from "@/validators/auth";
 import prisma from "@clash-app/db";
 import { Router, type Request, type Response } from "express";
 import bcrypt from "bcrypt";
+import { v4 as uuid4 } from "uuid";
+import { emailQueue, EmailQueueName } from "@/jobs/email.job";
 
 const router = Router();
 
@@ -16,13 +18,41 @@ router.post("/sign-up", async (req: Request, res: Response) => {
   const { name, email, password } = parsed.data;
 
   try {
-    const hash = await bcrypt.hash(password, 10);
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+      select: { id: true },
+    });
 
+    if (existingUser) {
+      return res.status(409).json({
+        error: {
+          code: "INVALID_CREDENTIALS",
+          message: "Invalid Credentials",
+        },
+      });
+    }
+
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+
+    // Create verification token
+    const token = await bcrypt.hash(uuid4(), salt);
+    const url = `${process.env.BACKEND_URL}/api/verify/email?email=${email}&token=${token}`;
+
+    // Render email
+    const html = await renderMailEjs("account-verify", {
+      name,
+      href: url,
+    });
+
+    // Create user
     const user = await prisma.user.create({
       data: {
         name,
         email,
         password: hash,
+        email_verify_token: token,
       },
       select: {
         name: true,
@@ -31,8 +61,15 @@ router.post("/sign-up", async (req: Request, res: Response) => {
       },
     });
 
+    //  Send email AFTER successful creation
+    await emailQueue.add(EmailQueueName, {
+      to: email,
+      subject: "Verify your email address",
+      html,
+    });
+
     return res.status(201).json({
-      message: "User created successfully",
+      message: "Please check your email to verify your account.",
       data: user,
     });
   } catch (err) {

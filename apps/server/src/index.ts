@@ -28,6 +28,13 @@ app.get("/", (_req, res) => {
   res.status(200).send("OK");
 });
 
+// app.get("/test", (_req, res) => {
+//   res.render("emails/account-verify", {
+//     name: "Rumon",
+//     href: "",
+//   });
+// });
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

@@ -1,5 +1,8 @@
 import { ZodError } from "zod";
 import { Prisma } from "@clash-app/db/prisma-client";
+import ejs from "ejs";
+import path from "path";
+import { fileURLToPath } from "url";
 
 export const formatError = (error: ZodError) => {
   return {
@@ -71,4 +74,14 @@ export const handlePrismaError = (
         : "An unexpected database error occurred",
     },
   };
+};
+
+export const renderMailEjs = async (fileName: string, payload: any) => {
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+  const filePath = path.join(__dirname, "views", "emails", `${fileName}.ejs`);
+
+  const html = await ejs.renderFile(filePath, payload);
+
+  return html;
 };
